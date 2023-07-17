@@ -8,10 +8,14 @@ import (
 )
 
 func main() {
-	optionSelected := messaging.GetOptionSelected()
+	var optionSelected int
+	var finalResult string
+
+	optionSelected = messaging.GetOptionSelected()
 
 	api.SetBaseValues()
-	finalResult := controllers.SwitchOption(optionSelected)
+
+	finalResult = controllers.SwitchOption(optionSelected)
 
 	fmt.Println(finalResult)
 }

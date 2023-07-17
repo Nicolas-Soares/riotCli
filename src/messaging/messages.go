@@ -26,7 +26,6 @@ func GetOptionSelected() int {
 }
 
 func AskForSummonerName() string {
-	// clearTerminal()
 	var summonerName string
 
 	fmt.Println("Type your summoner name: ")

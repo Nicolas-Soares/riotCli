@@ -1,6 +1,7 @@
 package api
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -9,15 +10,23 @@ import (
 var riotApiKey, baseUrl string
 
 func SearchSummonerByName(summonerName string) string {
-	requestUrl := fmt.Sprintf(
+	var requestUrl string
+	var body []byte
+	var jsonBytes []byte
+	var data map[string]interface{}
+	var client *http.Client
+	var req *http.Request
+	var res *http.Response
+
+	requestUrl = fmt.Sprintf(
 		"%s/summoner/v4/summoners/by-name/%s",
 		baseUrl,
 		summonerName,
 	)
 
-	client := &http.Client{}
+	client = &http.Client{}
 
-	req, _ := http.NewRequest(
+	req, _ = http.NewRequest(
 		"GET",
 		requestUrl,
 		nil,
@@ -25,13 +34,16 @@ func SearchSummonerByName(summonerName string) string {
 
 	req.Header.Set("X-Riot-Token", riotApiKey)
 
-	res, _ := client.Do(req)
+	res, _ = client.Do(req)
 
 	defer res.Body.Close()
 
-	body, _ := ioutil.ReadAll(res.Body)
+	body, _ = ioutil.ReadAll(res.Body)
 
-	return string(body)
+	json.Unmarshal(body, &data)
+	jsonBytes, _ = json.MarshalIndent(data, "", "  ")
+
+	return string(jsonBytes)
 }
 
 func SetBaseValues() {
