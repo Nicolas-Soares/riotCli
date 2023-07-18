@@ -35,12 +35,10 @@ type SummonerStats struct {
 
 var riotApiKey, baseUrl string
 
-func SearchSummonerByName(summonerName string) string {
+func SearchSummonerByName(summonerName string) []SummonerStats {
 	var summoner Summoner
 	var summonerStats []SummonerStats
 	var requestUrl string
-	// var jsonBytes []byte
-	// var data map[string]interface{}
 
 	summoner = getSummonerGeneralInfo(
 		requestUrl,
@@ -54,15 +52,7 @@ func SearchSummonerByName(summonerName string) string {
 		summonerStats,
 	)
 
-	// jsonBytes, _ = json.MarshalIndent(summoner, "", "  ")
-
-	for _, league := range summonerStats {
-		fmt.Println("Queue Type:", league.QueueType)
-		fmt.Println("Tier:", league.Tier)
-		fmt.Println("Rank:", league.Rank)
-	}
-
-	return ""
+	return summonerStats
 }
 
 func SetBaseValues(apiKey string) {

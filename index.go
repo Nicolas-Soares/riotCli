@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"riot/cli/src/api"
 	"riot/cli/src/controllers"
@@ -13,7 +12,6 @@ import (
 
 func main() {
 	var optionSelected int
-	var finalResult string
 	var riotApiKey string
 
 	setEnv()
@@ -23,9 +21,7 @@ func main() {
 	riotApiKey = os.Getenv("RIOT_API_KEY")
 	api.SetBaseValues(riotApiKey)
 
-	finalResult = controllers.SwitchOption(optionSelected)
-
-	fmt.Println(finalResult)
+	controllers.SwitchOption(optionSelected)
 }
 
 func setEnv() {

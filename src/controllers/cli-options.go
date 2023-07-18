@@ -1,20 +1,31 @@
 package controllers
 
 import (
+	"fmt"
 	"riot/cli/src/api"
 	"riot/cli/src/messaging"
 )
 
-func SwitchOption(option int) string {
+func SwitchOption(option int) {
 	switch option {
 	case 1:
 		summonerName := messaging.AskForSummonerName()
-		summonerData := api.SearchSummonerByName(summonerName)
+		summonerStats := api.SearchSummonerByName(summonerName)
 
-		return summonerData
+		for _, summoner := range summonerStats {
+			fmt.Println("Queue Type:", summoner.QueueType)
+			fmt.Println("Tier:", summoner.Tier)
+			fmt.Println("Rank:", summoner.Rank)
+			fmt.Println("League Points:", summoner.LeaguePoints)
+			fmt.Println("Wins:", summoner.Wins)
+			fmt.Println("Losses:", summoner.Losses)
+			fmt.Println("---------------------")
+		}
+
+		return
 	case 2:
-		return "Under construction..."
+		return
 	default:
-		return "! Default !"
+		return
 	}
 }
