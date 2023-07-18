@@ -13,7 +13,7 @@ func GetOptionSelected() int {
 		fmt.Println("=== LEAGUE OF LEGENDS CLI ===")
 		fmt.Println("What do you want to do?")
 		fmt.Println(`
-			1 - Search your summoner name
+			1 - Search rank by summoner name
 			2 - Fvck Goose's mom
 		`)
 

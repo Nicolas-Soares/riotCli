@@ -7,44 +7,117 @@ import (
 	"net/http"
 )
 
+type Summoner struct {
+	AccountID     string `json:"accountId"`
+	ID            string `json:"id"`
+	Name          string `json:"name"`
+	ProfileIconID int    `json:"profileIconId"`
+	PUUID         string `json:"puuid"`
+	RevisionDate  int64  `json:"revisionDate"`
+	SummonerLevel int    `json:"summonerLevel"`
+}
+
+type SummonerStats struct {
+	LeagueID     string `json:"leagueId"`
+	QueueType    string `json:"queueType"`
+	Tier         string `json:"tier"`
+	Rank         string `json:"rank"`
+	SummonerID   string `json:"summonerId"`
+	SummonerName string `json:"summonerName"`
+	LeaguePoints int    `json:"leaguePoints"`
+	Wins         int    `json:"wins"`
+	Losses       int    `json:"losses"`
+	Veteran      bool   `json:"veteran"`
+	Inactive     bool   `json:"inactive"`
+	FreshBlood   bool   `json:"freshBlood"`
+	HotStreak    bool   `json:"hotStreak"`
+}
+
 var riotApiKey, baseUrl string
 
 func SearchSummonerByName(summonerName string) string {
+	var summoner Summoner
+	var summonerStats []SummonerStats
 	var requestUrl string
-	var body []byte
-	var jsonBytes []byte
-	var data map[string]interface{}
-	var client *http.Client
-	var req *http.Request
-	var res *http.Response
+	// var jsonBytes []byte
+	// var data map[string]interface{}
 
+	summoner = getSummonerGeneralInfo(
+		requestUrl,
+		summonerName,
+		summoner,
+	)
+
+	summonerStats = gerSummonerStats(
+		requestUrl,
+		summoner,
+		summonerStats,
+	)
+
+	// jsonBytes, _ = json.MarshalIndent(summoner, "", "  ")
+
+	for _, league := range summonerStats {
+		fmt.Println("Queue Type:", league.QueueType)
+		fmt.Println("Tier:", league.Tier)
+		fmt.Println("Rank:", league.Rank)
+	}
+
+	return ""
+}
+
+func SetBaseValues(apiKey string) {
+	baseUrl = "https://br1.api.riotgames.com/lol"
+	riotApiKey = apiKey
+}
+
+func getSummonerGeneralInfo(requestUrl string, summonerName string, summoner Summoner) Summoner {
 	requestUrl = fmt.Sprintf(
 		"%s/summoner/v4/summoners/by-name/%s",
 		baseUrl,
 		summonerName,
 	)
 
-	client = &http.Client{}
+	client := &http.Client{}
 
-	req, _ = http.NewRequest(
+	req, _ := http.NewRequest(
 		"GET",
 		requestUrl,
 		nil,
 	)
 
 	req.Header.Set("X-Riot-Token", riotApiKey)
-	res, _ = client.Do(req)
+	res, _ := client.Do(req)
 
 	defer res.Body.Close()
 
-	body, _ = ioutil.ReadAll(res.Body)
-	json.Unmarshal(body, &data)
-	jsonBytes, _ = json.MarshalIndent(data, "", "  ")
+	body, _ := ioutil.ReadAll(res.Body)
+	json.Unmarshal(body, &summoner)
 
-	return string(jsonBytes)
+	return summoner
 }
 
-func SetBaseValues(apiKey string) {
-	baseUrl = "https://br1.api.riotgames.com/lol"
-	riotApiKey = apiKey
+func gerSummonerStats(requestUrl string, summoner Summoner, summonerStats []SummonerStats) []SummonerStats {
+	requestUrl = fmt.Sprintf(
+		"%s/league/v4/entries/by-summoner/%s",
+		baseUrl,
+		summoner.ID,
+	)
+
+	client := &http.Client{}
+
+	req, _ := http.NewRequest(
+		"GET",
+		requestUrl,
+		nil,
+	)
+
+	req.Header.Set("X-Riot-Token", riotApiKey)
+	res, _ := client.Do(req)
+
+	defer res.Body.Close()
+
+	body, _ := ioutil.ReadAll(res.Body)
+	json.Unmarshal([]byte(body), &summonerStats)
+
+	return summonerStats
 }
