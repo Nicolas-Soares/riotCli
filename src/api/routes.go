@@ -46,7 +46,7 @@ func SearchSummonerByName(summonerName string) []SummonerStats {
 		summoner,
 	)
 
-	summonerStats = gerSummonerStats(
+	summonerStats = getSummonerStats(
 		requestUrl,
 		summoner,
 		summonerStats,
@@ -86,7 +86,7 @@ func getSummonerGeneralInfo(requestUrl string, summonerName string, summoner Sum
 	return summoner
 }
 
-func gerSummonerStats(requestUrl string, summoner Summoner, summonerStats []SummonerStats) []SummonerStats {
+func getSummonerStats(requestUrl string, summoner Summoner, summonerStats []SummonerStats) []SummonerStats {
 	requestUrl = fmt.Sprintf(
 		"%s/league/v4/entries/by-summoner/%s",
 		baseUrl,
