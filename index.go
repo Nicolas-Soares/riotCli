@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"riot/cli/src/api"
 	"riot/cli/src/controllers"
@@ -12,16 +13,32 @@ import (
 
 func main() {
 	var optionSelected int
+	var continueTask int = 1
 	var riotApiKey string
 
 	setEnv()
 
-	optionSelected = messaging.GetOptionSelected()
+	for continueTask == 1 {
+		messaging.ClearTerminal()
+		optionSelected = messaging.GetOptionSelected()
 
-	riotApiKey = os.Getenv("RIOT_API_KEY")
-	api.SetBaseValues(riotApiKey)
+		riotApiKey = os.Getenv("RIOT_API_KEY")
+		api.SetBaseValues(riotApiKey)
 
-	controllers.SwitchOption(optionSelected)
+		controllers.SwitchOption(optionSelected)
+
+		messaging.ClearTerminal()
+
+		fmt.Println("Continue using the CLI?")
+		fmt.Println(`
+			1 - Yes
+			2 - No
+		`)
+
+		fmt.Scan(&continueTask)
+	}
+
+	fmt.Println("=== Exiting Riot CLI ===")
 }
 
 func setEnv() {

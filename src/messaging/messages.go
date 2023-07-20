@@ -19,7 +19,7 @@ func GetOptionSelected() int {
 
 		fmt.Scan(&optionSelect)
 
-		clearTerminal()
+		ClearTerminal()
 	}
 
 	return optionSelect
@@ -34,7 +34,7 @@ func AskForSummonerName() string {
 	return summonerName
 }
 
-func clearTerminal() {
+func ClearTerminal() {
 	cmd := exec.Command("cmd", "/c", "cls")
 	cmd.Stdout = os.Stdout
 	cmd.Run()

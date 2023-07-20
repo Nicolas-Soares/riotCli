@@ -13,6 +13,7 @@ func SwitchOption(option int) {
 		summonerStats := api.SearchSummonerByName(summonerName)
 
 		for _, summoner := range summonerStats {
+			fmt.Println("---------------------")
 			fmt.Println("Queue Type:", summoner.QueueType)
 			fmt.Println("Tier:", summoner.Tier)
 			fmt.Println("Rank:", summoner.Rank)
