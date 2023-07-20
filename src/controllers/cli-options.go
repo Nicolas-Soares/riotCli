@@ -25,6 +25,9 @@ func SwitchOption(option int) {
 
 		return
 	case 2:
+		// Buscar lista de jogadores atuais no Challenger
+		api.GetChallengerQueue()
+
 		return
 	default:
 		return

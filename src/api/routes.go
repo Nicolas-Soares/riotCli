@@ -35,6 +35,8 @@ type SummonerStats struct {
 
 var riotApiKey, baseUrl string
 
+func GetChallengerQueue() {}
+
 func SearchSummonerByName(summonerName string) []SummonerStats {
 	var summoner Summoner
 	var summonerStats []SummonerStats

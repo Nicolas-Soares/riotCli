@@ -27,8 +27,7 @@ func main() {
 
 		controllers.SwitchOption(optionSelected)
 
-		messaging.ClearTerminal()
-
+		fmt.Println()
 		fmt.Println("Continue using the CLI?")
 		fmt.Println(`
 			1 - Yes
