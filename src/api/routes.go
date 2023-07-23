@@ -40,16 +40,13 @@ func GetChallengerQueue() {}
 func SearchSummonerByName(summonerName string) []SummonerStats {
 	var summoner Summoner
 	var summonerStats []SummonerStats
-	var requestUrl string
 
 	summoner = getSummonerGeneralInfo(
-		requestUrl,
 		summonerName,
 		summoner,
 	)
 
 	summonerStats = getSummonerStats(
-		requestUrl,
 		summoner,
 		summonerStats,
 	)
@@ -62,8 +59,8 @@ func SetBaseValues(apiKey string) {
 	riotApiKey = apiKey
 }
 
-func getSummonerGeneralInfo(requestUrl string, summonerName string, summoner Summoner) Summoner {
-	requestUrl = fmt.Sprintf(
+func getSummonerGeneralInfo(summonerName string, summoner Summoner) Summoner {
+	requestUrl := fmt.Sprintf(
 		"%s/summoner/v4/summoners/by-name/%s",
 		baseUrl,
 		summonerName,
@@ -88,8 +85,8 @@ func getSummonerGeneralInfo(requestUrl string, summonerName string, summoner Sum
 	return summoner
 }
 
-func getSummonerStats(requestUrl string, summoner Summoner, summonerStats []SummonerStats) []SummonerStats {
-	requestUrl = fmt.Sprintf(
+func getSummonerStats(summoner Summoner, summonerStats []SummonerStats) []SummonerStats {
+	requestUrl := fmt.Sprintf(
 		"%s/league/v4/entries/by-summoner/%s",
 		baseUrl,
 		summoner.ID,
