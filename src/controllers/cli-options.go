@@ -24,7 +24,6 @@ func SwitchOption(option int) {
 
 		return
 	case 2:
-		// Buscar lista de jogadores atuais no Challenger
 		challengerEntries := api.GetChallengerQueue()
 
 		for _, summoner := range challengerEntries.Entries {
