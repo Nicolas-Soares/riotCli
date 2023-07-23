@@ -3,7 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
@@ -33,9 +33,42 @@ type SummonerStats struct {
 	HotStreak    bool   `json:"hotStreak"`
 }
 
+type ChallengerRanks struct {
+	Entries []ChallengerEntry `json:"entries"`
+}
+
+type ChallengerEntry struct {
+	SummonerName string `json:"summonerName"`
+	LeaguePoints int    `json:"leaguePoints"`
+	Wins         int    `json:"wins"`
+	Losses       int    `json:"losses"`
+}
+
 var riotApiKey, baseUrl string
 
-func GetChallengerQueue() {}
+func GetChallengerQueue() ChallengerRanks {
+	var challengerRanks ChallengerRanks
+
+	requestUrl := fmt.Sprintf("%s/league/v4/challengerleagues/by-queue/RANKED_SOLO_5x5", baseUrl)
+
+	client := &http.Client{}
+
+	req, _ := http.NewRequest(
+		"GET",
+		requestUrl,
+		nil,
+	)
+
+	req.Header.Set("X-Riot-Token", riotApiKey)
+	res, _ := client.Do(req)
+
+	defer res.Body.Close()
+
+	body, _ := io.ReadAll(res.Body)
+	json.Unmarshal(body, &challengerRanks)
+
+	return challengerRanks
+}
 
 func SearchSummonerByName(summonerName string) []SummonerStats {
 	var summoner Summoner
@@ -79,7 +112,7 @@ func getSummonerGeneralInfo(summonerName string, summoner Summoner) Summoner {
 
 	defer res.Body.Close()
 
-	body, _ := ioutil.ReadAll(res.Body)
+	body, _ := io.ReadAll(res.Body)
 	json.Unmarshal(body, &summoner)
 
 	return summoner
@@ -105,7 +138,7 @@ func getSummonerStats(summoner Summoner, summonerStats []SummonerStats) []Summon
 
 	defer res.Body.Close()
 
-	body, _ := ioutil.ReadAll(res.Body)
+	body, _ := io.ReadAll(res.Body)
 	json.Unmarshal([]byte(body), &summonerStats)
 
 	return summonerStats

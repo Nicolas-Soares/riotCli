@@ -26,9 +26,16 @@ func SwitchOption(option int) {
 		return
 	case 2:
 		// Buscar lista de jogadores atuais no Challenger
-		api.GetChallengerQueue()
+		challengerEntries := api.GetChallengerQueue()
 
-		return
+		for _, summoner := range challengerEntries.Entries {
+			fmt.Println("---------------------")
+			fmt.Println("Queue Type:", summoner.SummonerName)
+			fmt.Println("Tier:", summoner.LeaguePoints)
+			fmt.Println("Rank:", summoner.Wins)
+			fmt.Println("League Points:", summoner.Losses)
+			fmt.Println("---------------------")
+		}
 	default:
 		return
 	}
