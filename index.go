@@ -12,21 +12,19 @@ import (
 )
 
 func main() {
-	var optionSelected int
-	var continueTask int = 1
-	var riotApiKey string
+	continueTask := 1
 
 	setEnv()
 
 	for continueTask == 1 {
 		messaging.ClearTerminal()
-		optionSelected = messaging.GetOptionSelected()
+		optionSelected := messaging.GetOptionSelected()
 
 		if optionSelected == 3 {
 			break
 		}
 
-		riotApiKey = os.Getenv("RIOT_API_KEY")
+		riotApiKey := os.Getenv("RIOT_API_KEY")
 		api.SetBaseValues(riotApiKey)
 
 		controllers.SwitchOption(optionSelected)

@@ -4,19 +4,29 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+
+	"github.com/fatih/color"
 )
 
 func GetOptionSelected() int {
 	var optionSelect int
 
+	yellow := color.New(color.FgYellow).SprintFunc()
+	green := color.New(color.FgGreen).SprintFunc()
+
 	for optionSelect == 0 || optionSelect > 3 {
-		fmt.Println("=== LEAGUE OF LEGENDS CLI ===")
+		fmt.Printf("%s\n", yellow("=== LEAGUE OF LEGENDS CLI ==="))
 		fmt.Println("What do you want to do?")
-		fmt.Println(`
-			1 - Search rank by summoner name
-			2 - See actual Challenger queue
-			3 - Exit CLI
-		`)
+		fmt.Printf(`
+%s - Search rank by summoner name
+%s - See actual Challenger queue
+%s - Exit CLI
+		`,
+			green("1"),
+			green("2"),
+			green("3"),
+		)
+		fmt.Println()
 
 		fmt.Scan(&optionSelect)
 
