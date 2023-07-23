@@ -42,6 +42,7 @@ type ChallengerEntry struct {
 	LeaguePoints int    `json:"leaguePoints"`
 	Wins         int    `json:"wins"`
 	Losses       int    `json:"losses"`
+	Rank         string `json:"rank"`
 }
 
 var riotApiKey, baseUrl string

@@ -27,6 +27,7 @@ func main() {
 
 		controllers.SwitchOption(optionSelected)
 
+		fmt.Println("---------------------")
 		fmt.Println()
 		fmt.Println("Continue using the CLI?")
 		fmt.Println(`

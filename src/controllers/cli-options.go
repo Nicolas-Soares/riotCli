@@ -20,7 +20,6 @@ func SwitchOption(option int) {
 			fmt.Println("League Points:", summoner.LeaguePoints)
 			fmt.Println("Wins:", summoner.Wins)
 			fmt.Println("Losses:", summoner.Losses)
-			fmt.Println("---------------------")
 		}
 
 		return
@@ -30,11 +29,11 @@ func SwitchOption(option int) {
 
 		for _, summoner := range challengerEntries.Entries {
 			fmt.Println("---------------------")
-			fmt.Println("Queue Type:", summoner.SummonerName)
-			fmt.Println("Tier:", summoner.LeaguePoints)
-			fmt.Println("Rank:", summoner.Wins)
-			fmt.Println("League Points:", summoner.Losses)
-			fmt.Println("---------------------")
+			fmt.Println("Name:", summoner.SummonerName)
+			fmt.Println("Rank:", summoner.Rank)
+			fmt.Println("League Points:", summoner.LeaguePoints)
+			fmt.Println("Wins:", summoner.Wins)
+			fmt.Println("Losses:", summoner.Losses)
 		}
 	default:
 		return
