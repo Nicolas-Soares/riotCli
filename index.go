@@ -8,10 +8,15 @@ import (
 	"riot/cli/src/controllers"
 	"riot/cli/src/messaging"
 
+	"github.com/fatih/color"
 	"github.com/joho/godotenv"
 )
 
 func main() {
+	// Set color patterns
+	yellow := color.New(color.FgYellow).SprintFunc()
+	green := color.New(color.FgGreen).SprintFunc()
+
 	continueTask := 1
 
 	setEnv()
@@ -31,11 +36,15 @@ func main() {
 
 		fmt.Println("---------------------")
 		fmt.Println()
-		fmt.Println("Continue using the CLI?")
-		fmt.Println(`
-			1 - Yes
-			2 - No
-		`)
+		fmt.Printf("%s", yellow("Continue using the CLI?"))
+		fmt.Printf(`
+%s - Yes
+%s - No
+		`,
+			green("1"),
+			green("2"),
+		)
+		fmt.Println()
 
 		fmt.Scan(&continueTask)
 	}

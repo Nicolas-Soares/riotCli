@@ -9,7 +9,7 @@ import (
 )
 
 func GetOptionSelected() int {
-	var optionSelect int
+	optionSelect := 0
 
 	yellow := color.New(color.FgYellow).SprintFunc()
 	green := color.New(color.FgGreen).SprintFunc()
