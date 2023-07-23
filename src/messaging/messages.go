@@ -9,12 +9,13 @@ import (
 func GetOptionSelected() int {
 	var optionSelect int
 
-	for optionSelect == 0 || optionSelect > 2 {
+	for optionSelect == 0 || optionSelect > 3 {
 		fmt.Println("=== LEAGUE OF LEGENDS CLI ===")
 		fmt.Println("What do you want to do?")
 		fmt.Println(`
 			1 - Search rank by summoner name
 			2 - See actual Challenger queue
+			3 - Exit CLI
 		`)
 
 		fmt.Scan(&optionSelect)

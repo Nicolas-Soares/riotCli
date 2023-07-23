@@ -22,6 +22,10 @@ func main() {
 		messaging.ClearTerminal()
 		optionSelected = messaging.GetOptionSelected()
 
+		if optionSelected == 3 {
+			break
+		}
+
 		riotApiKey = os.Getenv("RIOT_API_KEY")
 		api.SetBaseValues(riotApiKey)
 
