@@ -22,7 +22,6 @@ func SwitchOption(option int) {
 			fmt.Println("Losses:", summoner.Losses)
 		}
 
-		return
 	case 2:
 		challengerEntries := api.GetChallengerQueue()
 
@@ -34,6 +33,18 @@ func SwitchOption(option int) {
 			fmt.Println("Wins:", summoner.Wins)
 			fmt.Println("Losses:", summoner.Losses)
 		}
+
+	case 3:
+		summonerName := messaging.AskForSummonerName()
+		topMastery := api.GetSummonerTopMastery(summonerName)
+
+		for _, mastery := range topMastery {
+			fmt.Println("---------------------")
+			fmt.Println("Champion:", mastery.ChampionId)
+			fmt.Println("Mastery level:", mastery.ChampionLevel)
+			fmt.Println("Mastery points:", mastery.ChampionPoints)
+		}
+
 	default:
 		return
 	}

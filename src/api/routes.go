@@ -45,7 +45,43 @@ type ChallengerEntry struct {
 	Rank         string `json:"rank"`
 }
 
+type Mastery struct {
+	ChampionId     int `json:"championId"`
+	ChampionLevel  int `json:"championLevel"`
+	ChampionPoints int `json:"championPoints"`
+}
+
 var riotApiKey, baseUrl string
+
+func GetSummonerTopMastery(summonerName string) []Mastery {
+	var summoner Summoner
+	var topMastery []Mastery
+
+	summoner = getSummonerGeneralInfo(
+		summonerName,
+		summoner,
+	)
+
+	requestUrl := fmt.Sprintf("%s/champion-mastery/v4/champion-masteries/by-summoner/%s/top", baseUrl, summoner.ID)
+
+	client := &http.Client{}
+
+	req, _ := http.NewRequest(
+		"GET",
+		requestUrl,
+		nil,
+	)
+
+	req.Header.Set("X-Riot-Token", riotApiKey)
+	res, _ := client.Do(req)
+
+	defer res.Body.Close()
+
+	body, _ := io.ReadAll(res.Body)
+	json.Unmarshal(body, &topMastery)
+
+	return topMastery
+}
 
 func GetChallengerQueue() ChallengerRanks {
 	var challengerRanks ChallengerRanks

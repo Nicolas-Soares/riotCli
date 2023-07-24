@@ -25,7 +25,7 @@ func main() {
 		messaging.ClearTerminal()
 		optionSelected := messaging.GetOptionSelected()
 
-		if optionSelected == 3 {
+		if optionSelected == 4 {
 			break
 		}
 
