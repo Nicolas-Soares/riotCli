@@ -40,7 +40,7 @@ func SwitchOption(option int) {
 
 		for _, mastery := range topMastery {
 			fmt.Println("---------------------")
-			fmt.Println("Champion:", mastery.ChampionId)
+			fmt.Println("Champion:", mastery.ChampionName)
 			fmt.Println("Mastery level:", mastery.ChampionLevel)
 			fmt.Println("Mastery points:", mastery.ChampionPoints)
 		}

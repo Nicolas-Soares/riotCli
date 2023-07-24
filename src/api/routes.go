@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
+	"strconv"
 )
 
 type Summoner struct {
@@ -47,8 +49,18 @@ type ChallengerEntry struct {
 
 type Mastery struct {
 	ChampionId     int `json:"championId"`
+	ChampionName   string
 	ChampionLevel  int `json:"championLevel"`
 	ChampionPoints int `json:"championPoints"`
+}
+
+type Champions struct {
+	Champion []Champion `json:"data"`
+}
+
+type Champion struct {
+	ID   string `json:"key"`
+	Name string `json:"name"`
 }
 
 var riotApiKey, baseUrl string
@@ -56,6 +68,7 @@ var riotApiKey, baseUrl string
 func GetSummonerTopMastery(summonerName string) []Mastery {
 	var summoner Summoner
 	var topMastery []Mastery
+	var champions Champions
 
 	summoner = getSummonerGeneralInfo(
 		summonerName,
@@ -79,6 +92,20 @@ func GetSummonerTopMastery(summonerName string) []Mastery {
 
 	body, _ := io.ReadAll(res.Body)
 	json.Unmarshal(body, &topMastery)
+
+	championsFile, _ := os.Open("champions.json")
+	championsBytes, _ := io.ReadAll(championsFile)
+	json.Unmarshal(championsBytes, &champions)
+
+	defer championsFile.Close()
+
+	for _, c := range champions.Champion {
+		for i, t := range topMastery {
+			if c.ID == strconv.FormatInt(int64(t.ChampionId), 10) {
+				topMastery[i].ChampionName = c.Name
+			}
+		}
+	}
 
 	return topMastery
 }
